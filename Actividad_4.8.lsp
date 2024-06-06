@@ -1,0 +1,40 @@
+(defun ingresarLista()
+	(let ((lista ()) (atomo 0))
+		(print "ingrese la lista heterogenea")
+		(setq lista (read))
+		(print "ingrese el atomo")
+		(setq atomo (read))
+		(if (and (listp lista) (numberp atomo))
+			(progn
+				(soloAtomos lista)
+				(compararAtomo lista atomo)
+				(crearLista lista atomo)
+			)
+			(print "Alguno de los datos ingresado es incorrecto")
+		)
+	)
+)
+
+(defun soloAtomos(lista)
+	(cond
+		((endp lista) T)
+		((atom (car lista)) (soloAtomos (cdr lista)))
+		(T NIL)
+	)
+)
+
+(defun compararAtomo(lista atomo)
+	(cond
+		((endp lista) 0)
+		((and (numberp (car lista)) (<= (car lista) atomo)) (+ 1 (compararAtomo (cdr lista) atomo)))
+		(T (compararAtomo (cdr lista) atomo))
+	)
+)
+
+(defun crearLista(lista atomo)
+	(cond 
+		((endp lista) lista)
+		((and (numberp (car lista)) (> (car lista) 0)) (cons (list (car lista) (/ (car lista) atomo)) (crearLista (cdr lista) atomo)))
+		(T (crearLista (cdr lista) atomo))
+	)
+)

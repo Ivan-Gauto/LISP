@@ -1,0 +1,30 @@
+(defun ingresarLista() 
+	(let ((lista ()))
+		(print "Ingrese lista de numeros")
+		(setq lista (read))
+		(if (listp lista)
+			(crearLista lista)
+			(print "Formato incorrecto")
+		)
+	)
+)
+
+(defun crearLista(lista)
+	(list (pares lista) (impares lista))
+)
+
+(defun pares(lista)
+	(cond 
+		((endp lista) lista)
+		((and (numberp (car lista)) (evenp (car lista)) (cons (car lista) (pares (cdr lista)))))
+		(T (pares (cdr lista)))
+	)
+)
+
+(defun impares(lista)
+	(cond 
+		((endp lista) lista)
+		((and (numberp (car lista)) (oddp (car lista)) (cons (car lista) (impares (cdr lista)))))
+		(T (impares (cdr lista)))
+	)
+)
